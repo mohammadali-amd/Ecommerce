@@ -18,8 +18,8 @@ export default function Layout({ children }) {
                   </svg>
                   Sign in
                </h2>
-               <button onClick={() => signIn('google')} className="bg-blue-900 text-lg py-2 px-6 rounded-lg">Sign in with Google</button>
-               <button onClick={() => signIn('github')} className="bg-black text-lg py-2 px-6 rounded-lg">Sign in with GitHub</button>
+               <button onClick={() => signIn('google')} className="rounded-lg text-lg px-6 py-2">Sign in with Google</button>
+               <button onClick={() => signIn('github')} className="bg-black rounded-lg text-lg px-6 py-2">Sign in with GitHub</button>
             </div>
          </main>
       )
@@ -28,7 +28,7 @@ export default function Layout({ children }) {
    return (
       <div className="bg-blue-900 min-h-screen flex">
          <Navbar />
-         <div className="bg-white text-blue-900 flex-grow mt-2 mr-2 mb-2 rounded-lg p-4">{children}</div>
+         <div className="bg-white flex-grow mt-2 mr-2 mb-2 rounded-lg p-4">{children}</div>
       </div>
    )
 }

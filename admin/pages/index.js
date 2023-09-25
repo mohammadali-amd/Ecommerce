@@ -10,7 +10,7 @@ export default function Home() {
         <div>
           Signed in as <b>{session?.user?.name}</b> <br />
           <b>Email:</b> {session?.user?.email} <br />
-          <button onClick={() => signOut()} className="bg-blue-900 text-white py-2 px-4 rounded-lg mt-4">Sign out</button>
+          <button onClick={() => signOut()} className="mt-4">Sign out</button>
         </div>
         <div className="flex items-center bg-gray-300 text-black rounded-lg h-fit overflow-hidden gap-1">
           <img src={session?.user?.image} alt={session?.user?.name} className="w-8 h-8" />
