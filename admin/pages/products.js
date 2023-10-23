@@ -30,7 +30,10 @@ const Products = () => {
             <tbody>
                {products.map(product => (
                   <tr key={product._id}>
-                     <td>{product.title}</td>
+                     <td className="flex gap-2">
+                        <img src={product.photo[0].photo} alt={product.title} width="25px" />
+                        {product.title}
+                     </td>
                      <td>
                         <Link href={'/products/edit/' + product._id}>
                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
