@@ -5,36 +5,38 @@ import { useState } from "react";
 const ProductForm = ({
    _id,
    title: existingTitle,
+   mainPhoto: existingMainPhoto,
    description: existingDescription,
    price: existingPrice,
 }) => {
    const [title, setTitle] = useState(existingTitle || '');
-   const [photo, setPhoto] = useState([{ photo: "" }]);
+   const [mainPhoto, setMainPhoto] = useState(existingMainPhoto || '');
+   // const [photos, setPhotos] = useState([{ photos: "" }]);
    const [description, setDescription] = useState(existingDescription || '');
    const [price, setPrice] = useState(existingPrice || '');
    const [goToProducts, setGoToProducts] = useState(false);
    const router = useRouter();
 
-   const handlePhotoChange = (e, index) => {
-      const { name, value } = e.target;
-      const list = [...photo];
-      list[index][name] = value;
-      setPhoto(list);
-   };
+   // const handlePhotoChange = (e, index) => {
+   //    const { name, value } = e.target;
+   //    const list = [...photos];
+   //    list[index][name] = value;
+   //    setPhotos(list);
+   // };
 
-   const handlePhotoRemove = (index) => {
-      const list = [...photo];
-      list.splice(index, 1);
-      setPhoto(list);
-   };
+   // const handlePhotoRemove = (index) => {
+   //    const list = [...photos];
+   //    list.splice(index, 1);
+   //    setPhotos(list);
+   // };
 
-   const handlePhotoAdd = () => {
-      setPhoto([...photo, { photo: "" }]);
-   };
+   // const handlePhotoAdd = () => {
+   //    setPhotos([...photos, { photos: "" }]);
+   // };
 
    const saveProduct = async (e) => {
       e.preventDefault();
-      const data = { title, photo, description, price };
+      const data = { title, mainPhoto, photos, description, price };
       if (_id) {
          // Update
          await axios.put('/api/products', { ...data, _id })
@@ -58,20 +60,27 @@ const ProductForm = ({
             value={title}
             onChange={e => setTitle(e.target.value)}
          />
-         <label>Photos</label>
-         {photo.map((singlePhoto, index) => (
+         <label>Main Photo</label>
+         <input
+            type="text"
+            placeholder="Main Photo"
+            value={mainPhoto}
+            onChange={e => setMainPhoto(e.target.value)}
+         />
+         {/* <label>Photo Gallery</label>
+         {photos.map((singlePhoto, index) => (
             <div key={index}>
                <div className="flex gap-2 mb-1">
                   <input
-                     name="photo"
+                     name="photos"
                      type="text"
-                     id="photo"
+                     id="photos"
                      placeholder={`Image Link (${index + 1})`}
-                     value={singlePhoto.photo}
+                     value={singlePhoto.photos}
                      onChange={(e) => handlePhotoChange(e, index)}
                      required
                   />
-                  {photo.length !== 1 && (
+                  {photos.length !== 1 && (
                      <button
                         type="button"
                         onClick={() => handlePhotoRemove(index)}
@@ -83,7 +92,7 @@ const ProductForm = ({
                      </button>
                   )}
                </div>
-               {photo.length - 1 === index && photo.length < 4 && (
+               {photos.length - 1 === index && photos.length < 4 && (
                   <button
                      type="button"
                      onClick={handlePhotoAdd}
@@ -93,7 +102,7 @@ const ProductForm = ({
                   </button>
                )}
             </div>
-         ))}
+         ))} */}
          <label>Description</label>
          <textarea
             placeholder="Description"
