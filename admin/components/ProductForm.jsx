@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProductForm = ({
    _id,
@@ -8,6 +8,8 @@ const ProductForm = ({
    mainPhoto: existingMainPhoto,
    description: existingDescription,
    price: existingPrice,
+   category: existingCategory,
+   properties: assignedProperties
 }) => {
    const [title, setTitle] = useState(existingTitle || '');
    const [mainPhoto, setMainPhoto] = useState(existingMainPhoto || '');
@@ -15,7 +17,16 @@ const ProductForm = ({
    const [description, setDescription] = useState(existingDescription || '');
    const [price, setPrice] = useState(existingPrice || '');
    const [goToProducts, setGoToProducts] = useState(false);
+   const [categories, setCategories] = useState([]);
+   const [category, setCategory] = useState(existingCategory || '');
+   const [productProperties, setProductProperties] = useState(assignedProperties || {});
    const router = useRouter();
+
+   useEffect(() => {
+      axios.get('/api/categories').then(result => {
+         setCategories(result.data);
+      })
+   }, [])
 
    // const handlePhotoChange = (e, index) => {
    //    const { name, value } = e.target;
@@ -36,7 +47,10 @@ const ProductForm = ({
 
    const saveProduct = async (e) => {
       e.preventDefault();
-      const data = { title, mainPhoto, photos, description, price };
+      const data = {
+         title, mainPhoto, description, price, category,
+         properties: productProperties
+      };
       if (_id) {
          // Update
          await axios.put('/api/products', { ...data, _id })
@@ -51,6 +65,24 @@ const ProductForm = ({
       router.push('/products')
    }
 
+   const propertiesToFill = [];
+   if (categories.length > 0 && category) {
+      let categoryInfo = categories.find(({ _id }) => _id === category);
+      propertiesToFill.push(...categoryInfo.properties);
+      while (categoryInfo?.parent?._id) {
+         const parentCat = categories.find(({ _id }) => _id === categoryInfo?.parent._id);
+         propertiesToFill.push(...parentCat.properties);
+         categoryInfo = parentCat;
+      }
+   }
+
+   const setProductProp = (propName, value) => {
+      setProductProperties(prev => {
+         const newProductProps = { ...prev };
+         newProductProps[propName] = value;
+         return newProductProps;
+      })
+   }
    return (
       <form onSubmit={saveProduct}>
          <label>Product Name</label>
@@ -60,6 +92,30 @@ const ProductForm = ({
             value={title}
             onChange={e => setTitle(e.target.value)}
          />
+         <label>Category</label>
+         <select
+            value={category}
+            onChange={e => setCategory(e.target.value)}
+         >
+            <option value="">Uncategorized</option>
+            {categories.length > 0 && categories.map(category => (
+               <option key={category._id} value={category._id}>{category.name}</option>
+            ))}
+         </select>
+         {propertiesToFill.length > 0 && propertiesToFill.map(property => (
+            <div className="flex gap-1">
+               <div>{property.name}</div>
+               <select
+                  value={productProperties[property.name]}
+                  onChange={e => setProductProp(property.name, e.target.value)}
+               >
+                  {property.values.map(value => (
+                     <option value={value}>{value}</option>
+                  ))}
+               </select>
+            </div>
+         )
+         )}
          <label>Main Photo</label>
          <input
             type="text"
