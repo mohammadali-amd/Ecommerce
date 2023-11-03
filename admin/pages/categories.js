@@ -131,7 +131,7 @@ const Categories = () => {
                <button
                   onClick={addProperty}
                   type="button"
-                  className="bg-gray-500 text-sm mb-2"
+                  className="btn-default text-sm mb-2"
                >
                   Add new property
                </button>
@@ -187,6 +187,7 @@ const Categories = () => {
                   <tr>
                      <td>Category name</td>
                      <td>Parent category</td>
+                     <td></td>
                   </tr>
                </thead>
                <tbody>

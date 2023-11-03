@@ -103,8 +103,8 @@ const ProductForm = ({
             ))}
          </select>
          {propertiesToFill.length > 0 && propertiesToFill.map(property => (
-            <div className="flex gap-1">
-               <div>{property.name}</div>
+            <div>
+               <label>{property.name[0].toUpperCase() + property.name.substring(1)}</label>
                <select
                   value={productProperties[property.name]}
                   onChange={e => setProductProp(property.name, e.target.value)}
