@@ -16,7 +16,7 @@ const Navbar = ({ show, close }) => {
       await signOut();
    }
    return (
-      <aside className={(show ? 'left-0 bg-[#FBFAFD]' : '-left-full') + " top-0 text-gray-500 p-4 fixed w-full h-full md:static md:w-auto transition-all"}>
+      <aside className={(show ? 'left-0 bg-[#FBFAFD]' : '-left-full') + " top-0 text-gray-500 p-4 fixed w-full h-full md:static md:max-w-fit transition-all"}>
          <div className="flex justify-between mb-4 mr-2">
             <Logo />
             <span className={`${show ? 'fixed' : 'hidden'} right-5 cursor-pointer`} onClick={() => close(false)}>
