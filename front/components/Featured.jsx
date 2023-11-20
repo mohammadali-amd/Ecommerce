@@ -3,21 +3,26 @@ import Center from "./Center"
 import Button from "./Button"
 import ButtonLink from "./ButtonLink"
 import CartIcon from "./icons/CartIcon"
+import { useContext } from "react"
+import { CartContext } from "./CartContext"
 
 const Bg = styled.div`
    background-color: #222;
    color: #fff;
    padding: 50px 0;
-`
+`;
+
 const Title = styled.h1`
    margin: 0 0 10px 0;
    font-size: 3rem;
    font-weight: bold;
-`
+`;
+
 const Desc = styled.p`
    color: #aaa;
    font-size: 1rem;
-`
+`;
+
 const ColumWrapper = styled.div`
    display: grid;
    grid-template-columns: 1.1fr .9fr;
@@ -25,18 +30,25 @@ const ColumWrapper = styled.div`
    img {
       max-width: 100%;
    }
-`
+`;
+
 const ButtonsWrapper = styled.div`
    display: flex;
    gap: 10px;
    margin-top: 25px;
-`
+`;
+
 const Column = styled.div`
    display: flex;
    align-items: center;
-`
+`;
 
 const Featured = ({ product }) => {
+   const { addProduct } = useContext(CartContext);
+   const addFeaturedToCart = () => {
+      addProduct(product._id);
+   }
+
    return (
       <Bg>
          <Center>
@@ -47,7 +59,7 @@ const Featured = ({ product }) => {
                      <Desc>{product.description}</Desc>
                      <ButtonsWrapper>
                         <ButtonLink href={'/products/' + product._id} outline={1} white={1}>Read more</ButtonLink>
-                        <Button href={'/'} white={1}>
+                        <Button white={1} onClick={addFeaturedToCart}>
                            <CartIcon />
                            Add to cart
                         </Button>
@@ -63,4 +75,4 @@ const Featured = ({ product }) => {
    )
 }
 
-export default Featured
+export default Featured;

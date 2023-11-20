@@ -1,13 +1,13 @@
 import { mongooseConnect } from '@/mongoose';
 import { Product } from '@/models/Product'
-import Heaedr from '@/components/Heaedr'
+import Header from '@/components/Header'
 import Featured from '@/components/Featured'
 import NewProducts from '@/components/NewProducts';
 
 export default function Home({ featuredProduct, newProducts }) {
   return (
     <div>
-      <Heaedr />
+      <Header />
       <Featured product={featuredProduct} />
       <NewProducts products={newProducts} />
     </div>

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import Center from "./Center";
 import ProductBox from "./ProductBox";
 
@@ -27,4 +27,4 @@ const NewProducts = ({ products }) => {
    )
 }
 
-export default NewProducts
+export default NewProducts;
