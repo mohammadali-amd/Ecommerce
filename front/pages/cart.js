@@ -60,7 +60,7 @@ export default function CartPage() {
    const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
    const [products, setProducts] = useState([]);
    const [name, setName] = useState('');
-   const [emial, setemial] = useState('');
+   const [email, setEmail] = useState('');
    const [city, setcity] = useState('');
    const [postalCode, setPostalCode] = useState('');
    const [streetAddress, setSetstreetAddress] = useState('');
@@ -85,11 +85,37 @@ export default function CartPage() {
       removeProduct(id);
    }
 
+   const goToPayment = async () => {
+      // const response = await axios.post('/api/checkout', {
+      //    name, email, city, postalCode, streetAddress, country, cartProducts
+      // })
+
+      // if (response) {
+      //    window.location = response.data.url;
+      // }
+   }
+
    let total = 0;
    for (const productId of cartProducts) {
       const price = products.find(p => p._id === productId)?.price || 0;
       total += price;
    }
+
+   // if (window.location.href.includes('success')) {
+   //    return (
+   //       <>
+   //          <Header />
+   //          <Center>
+   //             <ColumnWrapper>
+   //                <Box>
+   //                   <h2>Thanks for your order.</h2>
+   //                </Box>
+   //             </ColumnWrapper>
+   //          </Center>
+   //       </>
+   //    )
+   // }
+
    return (
       <>
          <Header />
@@ -106,7 +132,7 @@ export default function CartPage() {
                         </tr>
                         <tbody>
                            {products.map(product => (
-                              <tr>
+                              <tr key={product._id}>
                                  <ProductInfoCell>
                                     <ProductImageBox>
                                        <img src={product.mainPhoto} alt={product.title} />
@@ -147,55 +173,53 @@ export default function CartPage() {
                {!!cartProducts?.length && (
                   <Box>
                      <h2>Order information</h2>
-                     <form method="post" action="/api/checkout">
+                     <Input
+                        type="text"
+                        placeholder="Name"
+                        value={name}
+                        name="name"
+                        onChange={e => setName(e.target.value)}
+                     />
+                     <Input
+                        type="text"
+                        placeholder="Email"
+                        value={email}
+                        name="email"
+                        onChange={e => setEmail(e.target.value)}
+                     />
+                     <CityHolder>
                         <Input
                            type="text"
-                           placeholder="Name"
-                           value={name}
-                           name="name"
-                           onChange={e => setName(e.target.value)}
+                           placeholder="City"
+                           value={city}
+                           name="city"
+                           onChange={e => setcity(e.target.value)}
                         />
                         <Input
                            type="text"
-                           placeholder="Email"
-                           value={emial}
-                           name="emial"
-                           onChange={e => setemial(e.target.value)}
+                           placeholder="Postal Code"
+                           value={postalCode}
+                           name="postalCode"
+                           onChange={e => setPostalCode(e.target.value)}
                         />
-                        <CityHolder>
-                           <Input
-                              type="text"
-                              placeholder="City"
-                              value={city}
-                              name="city"
-                              onChange={e => setcity(e.target.value)}
-                           />
-                           <Input
-                              type="text"
-                              placeholder="Postal Code"
-                              value={postalCode}
-                              name="postalCode"
-                              onChange={e => setPostalCode(e.target.value)}
-                           />
-                        </CityHolder>
-                        <Input
-                           type="text"
-                           placeholder="Street Address"
-                           value={streetAddress}
-                           name="streetAddress"
-                           onChange={e => setSetstreetAddress(e.target.value)}
-                        />
-                        <Input
-                           type="text"
-                           placeholder="Country"
-                           value={country}
-                           name="country"
-                           onChange={e => setCountry(e.target.value)}
-                        />
-                        <Button type="submit" block={1} black={1}>
-                           Continue to payment
-                        </Button>
-                     </form>
+                     </CityHolder>
+                     <Input
+                        type="text"
+                        placeholder="Street Address"
+                        value={streetAddress}
+                        name="streetAddress"
+                        onChange={e => setSetstreetAddress(e.target.value)}
+                     />
+                     <Input
+                        type="text"
+                        placeholder="Country"
+                        value={country}
+                        name="country"
+                        onChange={e => setCountry(e.target.value)}
+                     />
+                     <Button onClick={goToPayment} block={1} black={1}>
+                        Continue to payment
+                     </Button>
                   </Box>
                )}
             </ColumnWrapper>
