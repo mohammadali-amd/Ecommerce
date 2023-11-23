@@ -1,5 +1,6 @@
 import { mongooseConnect } from "@/mongoose";
 import { Product } from "@/models/Product";
+import { Order } from "@/models/Order";
 
 export default async function handler(req, res) {
    if (req.method !== 'POST') {

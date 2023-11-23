@@ -37,7 +37,7 @@ const Header = () => {
                   <NavLink href={'/products'}>Products</NavLink>
                   <NavLink href={'/categories'}>Categories</NavLink>
                   <NavLink href={'/account'}>Account</NavLink>
-                  <NavLink href={'/cart'}>Cart ({cartProducts.length})</NavLink>
+                  <NavLink href={'/cart'}>Cart ({cartProducts ? cartProducts.length : '0'})</NavLink>
                </StyledNav>
             </Wrapper>
          </Center>
