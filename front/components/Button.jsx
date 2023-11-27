@@ -13,8 +13,10 @@ export const ButtonStyle = css`
       margin-right: 5px;
    }
    ${props => props.block && css`
-      display: block;
+      display: flex;
       width: 100%;
+      justify-content: center;
+      align-items: center;
    `}
    ${props => props.white && !props.outline && css`
       background-color: #fff;
@@ -51,7 +53,6 @@ export const ButtonStyle = css`
       height: 20px;
       }
    `}
-   
 `;
 
 const StyledButton = styled.button`

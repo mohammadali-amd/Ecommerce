@@ -7,28 +7,27 @@ import Center from "@/components/Center";
 import Header from "@/components/Header";
 import Table from "@/components/Table";
 import Input from "@/components/Input";
+import WhiteBox from "@/components/WhiteBox";
+import Link from "next/link";
 
 const ColumnWrapper = styled.div`
    display: grid;
-   grid-template-columns: 1.3fr .7fr;
+   grid-template-columns: 1fr;
    gap: 40px;
-   margin-top: 40px;
+   margin: 40px 0;
+   @media screen and (min-width: 768px) {
+      grid-template-columns: .8fr 1.2fr;
+   }
 `;
 
-const Box = styled.div`
-   background-color: #fff;
-   border-radius: 10px;
-   padding: 30px;
-`;
-
-const ProductInfoCell = styled.td`
+const ProductInfoCell = styled(Link)`
    padding: 10px 0;
 `;
 
 const ProductImageBox = styled.div`
-   width: 90px;
-   height: 90px;
-   padding: 10px;
+   width: 70px;
+   height: 70px;
+   padding: 2px;
    background-color: #f0f0f0;
    border: 1px solid rgba(0, 0, 0, 0.1);
    border-radius: 10px;
@@ -36,13 +35,27 @@ const ProductImageBox = styled.div`
    align-items: center;
    justify-content: center;
    img{
-      max-width: 70px;
-      max-width: 70px;
+      max-width: 60px;
+      max-width: 60px;
+   }
+   @media screen and (min-width: 768px) {
+      padding: 10px;
+      width: 100px;
+      height: 100px;
+      img{
+         max-width: 80px;
+         max-width: 80px;
+      }
    }
 `;
 
 const QuantityLabel = styled.span`
-   padding: 0 3px;
+   padding: 0 15px;
+   display: block;
+   @media screen and (min-width: 768px) {
+      padding: 0 10px;
+      display: inline-block;
+   }
 `;
 
 const CityHolder = styled.div`
@@ -120,9 +133,9 @@ export default function CartPage() {
             <Header />
             <Center>
                <ColumnWrapper>
-                  <Box>
+                  <WhiteBox>
                      <h2>Thanks for your order.</h2>
-                  </Box>
+                  </WhiteBox>
                </ColumnWrapper>
             </Center>
          </>
@@ -134,7 +147,7 @@ export default function CartPage() {
          <Header />
          <Center>
             <ColumnWrapper>
-               <Box>
+               <WhiteBox>
                   <Title>Cart</Title>
                   {products?.length > 0 ? (
                      <Table>
@@ -148,12 +161,14 @@ export default function CartPage() {
                         <tbody>
                            {products.map(product => (
                               <tr key={product._id}>
-                                 <ProductInfoCell>
-                                    <ProductImageBox>
-                                       <img src={product.mainPhoto} alt={product.title} />
-                                    </ProductImageBox>
-                                    {product.title}
-                                 </ProductInfoCell>
+                                 <td>
+                                    <ProductInfoCell href={`/product/${product._id}`}>
+                                       <ProductImageBox>
+                                          <img src={product.mainPhoto} alt={product.title} />
+                                       </ProductImageBox>
+                                       {product.title}
+                                    </ProductInfoCell>
+                                 </td>
                                  <td>
                                     <Button
                                        onClick={() => lessOfThisProduct(product._id)}
@@ -184,9 +199,9 @@ export default function CartPage() {
                   ) : (
                      <div>Your cart is empty!</div>
                   )}
-               </Box>
+               </WhiteBox>
                {!!cartProducts?.length && (
-                  <Box>
+                  <WhiteBox>
                      <h2>Order information</h2>
                      <Input
                         type="text"
@@ -235,7 +250,7 @@ export default function CartPage() {
                      <Button onClick={goToPayment} block={1} black={1}>
                         Continue to payment
                      </Button>
-                  </Box>
+                  </WhiteBox>
                )}
             </ColumnWrapper>
          </Center>

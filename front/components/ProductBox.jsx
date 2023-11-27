@@ -5,10 +5,6 @@ import CartIcon from "./icons/CartIcon";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
 
-const ProductWrapper = styled.div`
-
-`;
-
 const WhiteBox = styled(Link)`
    background-color: #fff;
    padding: 20px;
@@ -37,22 +33,32 @@ const ProductInfoBox = styled.div`
 `;
 
 const PriceRow = styled.div`
-   display: flex;
+   display: block;
    align-items: center;
    justify-content: space-between;
    margin-top: 5px;
+   @media screen and (min-width: 768px) {
+      display: flex;
+      gap: 5px;
+   }
 `;
 
 const Price = styled.div`
-   font-size: 1.5rem;
+   font-size: 1rem;
    font-weight: bold;
+   text-align: right;
+   @media screen and (min-width: 768px) {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: left;
+   }
 `;
 
 const ProductBox = ({ _id, title, description, price, mainPhoto }) => {
    const { addProduct } = useContext(CartContext)
    const url = '/product/' + _id;
    return (
-      <ProductWrapper>
+      <div>
          <WhiteBox href={url}>
             <img src={mainPhoto} alt="" />
          </WhiteBox>
@@ -63,13 +69,13 @@ const ProductBox = ({ _id, title, description, price, mainPhoto }) => {
                   ${price}
                </Price>
                <div>
-                  <Button onClick={() => addProduct(_id)} primary={1} outline={1}>
-                     <CartIcon />
+                  <Button onClick={() => addProduct(_id)} primary={1} outline={1} block={1}>
+                     <CartIcon /> Add to cart
                   </Button>
                </div>
             </PriceRow>
          </ProductInfoBox>
-      </ProductWrapper>
+      </div>
    )
 }
 
