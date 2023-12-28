@@ -1,15 +1,28 @@
+import { useContext } from "react"
+import { CartContext } from "./CartContext"
+import { Swiper, SwiperSlide } from 'swiper/react';
 import styled from "styled-components"
+
 import Center from "./Center"
 import Button from "./Button"
 import ButtonLink from "./ButtonLink"
 import CartIcon from "./icons/CartIcon"
-import { useContext } from "react"
-import { CartContext } from "./CartContext"
+
+import { slider_banner_1, slider_banner_2, slider_banner_3 } from "@/public/images";
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+// import required modules
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import Image from "next/image"
 
 const Bg = styled.div`
    background-color: #222;
    color: #fff;
-   padding: 50px 0;
+   /* padding: 0 0 50px 0 ; */
 `;
 
 const Title = styled.h1`
@@ -62,14 +75,44 @@ const Column = styled.div`
 `;
 
 const Featured = ({ product }) => {
-   const { addProduct } = useContext(CartContext);
-   const addFeaturedToCart = () => {
-      addProduct(product._id);
-   }
+   // const { addProduct } = useContext(CartContext);
+   // const addFeaturedToCart = () => {
+   //    addProduct(product._id);
+   // }
 
    return (
       <Bg>
-         <Center>
+         <div className="mb-10">
+            <Swiper
+               spaceBetween={30}
+               loop={true}
+               centeredSlides={true}
+               autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+               }}
+               pagination={{
+                  clickable: true,
+               }}
+               navigation={true}
+               modules={[Autoplay, Pagination, Navigation]}
+               style={{
+                  "--swiper-navigation-color": "#fff",
+                  "--swiper-pagination-color": "#fff",
+               }}
+            >
+               <SwiperSlide>
+                  <Image src={slider_banner_1} alt="slider-banner" />
+               </SwiperSlide>
+               <SwiperSlide>
+                  <Image src={slider_banner_2} alt="slider-banner" />
+               </SwiperSlide>
+               <SwiperSlide>
+                  <Image src={slider_banner_3} alt="slider-banner" />
+               </SwiperSlide>
+            </Swiper>
+         </div>
+         {/* <Center>
             <ColumWrapper>
                <Column>
                   <div>
@@ -88,7 +131,7 @@ const Featured = ({ product }) => {
                   <img src="https://picsum.photos/500/300" alt="feature image" />
                </Column>
             </ColumWrapper>
-         </Center>
+         </Center> */}
       </Bg>
    )
 }
